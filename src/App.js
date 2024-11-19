@@ -23,11 +23,16 @@ function App() {
     }, [searchQuery]); // จะทำงานทุกครั้งที่คำค้นหาหรือ searchQuery เปลี่ยน
 
     const createTodo = () => {
-        axios
-            .post("http://localhost:8000/api/todos", newTodo)
-            .then((response) => setTodos([...todos, response.data]))
-            .catch((error) => console.error(error));
-    };
+      axios
+          .post("http://localhost:8000/api/todos", newTodo)
+          .then((response) => {
+              setTodos([...todos, response.data]);
+              // รีเซ็ตค่าหลังจากเพิ่ม todo ใหม่
+              setNewTodo({ title: "", description: "" });
+          })
+          .catch((error) => console.error(error));
+  };
+  
 
     const deleteTodo = (id) => {
         if (id) {
